@@ -20,10 +20,8 @@ public:
 
 private:
 	void saveWord(std::string &str);
-	void sortMap(std::map <int, std::list<std::string>> &orderedMap);
-	void print(std::map <int, std::list<std::string>> &orderedMap, std::ofstream &file);
+	void print(std::list<std::pair<std::string, int>> &wordList, std::ofstream &file);
 };
 
-
 int isSymbol(char *symb);
-void insertInList(std::map <int, std::list<std::string>> &orderedMap, std::map <std::string, int>::iterator &it);
+bool compare(const std::pair<std::string, int>&first, const std::pair<std::string, int>&second);

@@ -5,7 +5,8 @@
 #include <list>
 #include <map>
 #include <algorithm>
-#include <iomanip> 
+#include <iomanip>
+#include <exception>
 
 void WordCounter::readFile(const std::string &fileName)
 {
@@ -14,7 +15,7 @@ void WordCounter::readFile(const std::string &fileName)
 	file.open(fileName);
 	if (!file)
 	{
-		throw "Can't open the file";
+		throw std::invalid_argument("Can't open the file");
 	}
 
 	std::string buffer;
@@ -65,7 +66,7 @@ void WordCounter::printAnswer(const std::string &fileName)
 	file.open(fileName);
 	if (!file)
 	{
-		throw "Can't open the file";
+		throw std::invalid_argument("Can't open the file");
 	}
 
 	if (wordCount == 0)
@@ -74,51 +75,34 @@ void WordCounter::printAnswer(const std::string &fileName)
 		return;
 	}
 
-	std::map <int, std::list<std::string>> orderedMap;
+	std::list<std::pair<std::string, int>> wordList(wordMap.begin(), wordMap.end());
+	wordList.sort(compare);
 
-	sortMap(orderedMap);
-
-	print(orderedMap, file);
+	print(wordList, file);
 
 	file.close();
 }
 
-void WordCounter::sortMap(std::map <int, std::list<std::string>> &orderedMap)
+bool compare(const std::pair<std::string, int>&first, const std::pair<std::string, int>&second)
 {
-	for (std::map <std::string, int>::iterator it = wordMap.begin(); it != wordMap.end(); ++it)
-	{
-		if (orderedMap[it->second].empty())
-		{
-			orderedMap[it->second].push_back(it->first);
-		}
-		else
-		{
-			insertInList(orderedMap, it);
-		}
-	}
-}
+	if (first.second > second.second) return true;
+	if (first.second < second.second) return false;
 
-void insertInList(std::map <int, std::list<std::string>> &orderedMap, std::map <std::string, int>::iterator &it)
-{
-	for (std::list<std::string>::iterator i = orderedMap[it->second].begin(); i != orderedMap[it->second].end(); ++i)
+	unsigned int i;
+	for (i = 0; i < first.first.length() && i < second.first.length(); i++)
 	{
-		if (*i > it->first)
-		{
-			orderedMap[it->second].emplace(i, it->first);
-			return;
-		}
+		if (first.first[i] < second.first[i]) return true;
+		if (first.first[i] > second.first[i]) return false;
 	}
 
-	orderedMap[it->second].emplace_back(it->first);
+	if (i == first.first.length()) return true;
+	return false;
 }
 
-void WordCounter::print(std::map <int, std::list<std::string>> &orderedMap, std::ofstream &file)
+void WordCounter::print(std::list<std::pair<std::string, int>> &wordList, std::ofstream &file)
 {
-	for (std::map <int, std::list<std::string>>::iterator it = --orderedMap.end(); it != --orderedMap.begin(); --it)
+	for (std::list<std::pair<std::string, int>>::iterator it = wordList.begin(); it != wordList.end(); it++)
 	{
-		for (std::list<std::string>::iterator i = it->second.begin(); i != it->second.end(); ++i)
-		{
-			file << *i << ";" << it->first << ";" << std::fixed << std::setprecision(2) << ((double)it->first / wordCount * 100) << " %" << std::endl;
-		}
+		file << it->first << ";" << it->second << ";" << std::fixed << std::setprecision(2) << ((double)it->second / wordCount * 100) << " %" << std::endl;
 	}
 }
