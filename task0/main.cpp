@@ -18,9 +18,9 @@ int main(int argc, char **argv)
 		text->readFile(argv[1]);
 		text->printAnswer(argv[2]);
 	}
-	catch(const char* exception)
+	catch(const std::invalid_argument& err)
 	{
-		std::cerr << "Error: " << exception << std::endl;
+		std::cerr << "Error: " << err.what() << std::endl;
 	}
 
 	delete text;
