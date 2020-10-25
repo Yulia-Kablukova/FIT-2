@@ -41,6 +41,7 @@ LinkedList & LinkedList::operator=(const LinkedList & other)
 
 	return *this;
 }
+
 LinkedList & LinkedList::operator=(LinkedList && other)
 {
 	clear();
@@ -59,24 +60,29 @@ LinkedList::iterator LinkedList::begin()
 {
 	return tail->next;
 }
+
 LinkedList::const_iterator LinkedList::begin() const
 {
 	return tail->next;
 }
+
 LinkedList::const_iterator LinkedList::cbegin() const
 {
 	return tail->next;
 }
+
 //Возвращает итератор, указывающий на элемент списка, следующий за последним
 //т.е. отсутствующий в списке.
 LinkedList::iterator LinkedList::end()
 {
 	return tail;
 }
+
 LinkedList::const_iterator LinkedList::end() const
 {
 	return tail;
 }
+
 LinkedList::const_iterator LinkedList::cend() const
 {
 	return tail;
@@ -126,6 +132,7 @@ LinkedList::iterator LinkedList::erase(iterator pos)
 
 	return tail->next;
 }
+
 //Удаляет элементы в интервале [begin, end).
 LinkedList::iterator LinkedList::erase(iterator begin, iterator end)
 {
@@ -173,7 +180,7 @@ void LinkedList::clear()
 //Удаляет последний элемент списка.
 void LinkedList::pop_back()
 {
-	if (tail->next == tail)
+	if (empty())
 		return;
 
 	node* tmp = tail->prev;
@@ -184,10 +191,11 @@ void LinkedList::pop_back()
 	delete tmp;
 	listSize--;
 }
+
 //Удаляет первый элемент списка.
 void LinkedList::pop_front()
 {
-	if (tail->next == tail)
+	if (empty())
 		return;
 
 	node* tmp = tail->next;
