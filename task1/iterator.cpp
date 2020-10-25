@@ -1,4 +1,4 @@
-#include "linked_list.h"
+ï»¿#include "linked_list.h"
 
 LinkedList::iterator & LinkedList::iterator::operator=(const iterator & other)
 {
@@ -16,13 +16,13 @@ bool LinkedList::iterator::operator==(const iterator & other) const
 	return cur == other.cur;
 }
 
-//Âîçâğàùàåò ññûëêó íà òåêóùèé ıëåìåíò êîëëåêöèè.
+//Ğ’Ğ¾Ğ·Ğ²Ñ€Ğ°Ñ‰Ğ°ĞµÑ‚ ÑÑÑ‹Ğ»ĞºÑƒ Ğ½Ğ° Ñ‚ĞµĞºÑƒÑ‰Ğ¸Ğ¹ ÑĞ»ĞµĞ¼ĞµĞ½Ñ‚ ĞºĞ¾Ğ»Ğ»ĞµĞºÑ†Ğ¸Ğ¸.
 value_type & LinkedList::iterator::operator*()
 {
 	return cur->data;
 }
 
-//Âîçâğàùàåò óêàçàòåëü íà òåêóùèé ıëåìåíò êîëëåêöèè.
+//Ğ’Ğ¾Ğ·Ğ²Ñ€Ğ°Ñ‰Ğ°ĞµÑ‚ ÑƒĞºĞ°Ğ·Ğ°Ñ‚ĞµĞ»ÑŒ Ğ½Ğ° Ñ‚ĞµĞºÑƒÑ‰Ğ¸Ğ¹ ÑĞ»ĞµĞ¼ĞµĞ½Ñ‚ ĞºĞ¾Ğ»Ğ»ĞµĞºÑ†Ğ¸Ğ¸.
 value_type * LinkedList::iterator::operator->()
 {
 	return &cur->data;

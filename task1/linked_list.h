@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 
 typedef int value_type;
 class LinkedList {
@@ -21,9 +21,9 @@ public:
 		iterator & operator=(const iterator & other);
 		bool operator!=(const iterator & other) const;
 		bool operator==(const iterator & other) const;
-		//Возвращает ссылку на текущий элемент коллекции.
+		//Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃСЃС‹Р»РєСѓ РЅР° С‚РµРєСѓС‰РёР№ СЌР»РµРјРµРЅС‚ РєРѕР»Р»РµРєС†РёРё.
 		value_type & operator*();
-		//Возвращает указатель на текущий элемент коллекции.
+		//Р’РѕР·РІСЂР°С‰Р°РµС‚ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° С‚РµРєСѓС‰РёР№ СЌР»РµРјРµРЅС‚ РєРѕР»Р»РµРєС†РёРё.
 		value_type * operator->();
 
 		iterator & operator++();
@@ -40,9 +40,9 @@ public:
 		const_iterator & operator=(const const_iterator & other);
 		bool operator!=(const const_iterator & other) const;
 		bool operator==(const const_iterator & other) const;
-		//Возвращает ссылку на текущий элемент коллекции.
+		//Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃСЃС‹Р»РєСѓ РЅР° С‚РµРєСѓС‰РёР№ СЌР»РµРјРµРЅС‚ РєРѕР»Р»РµРєС†РёРё.
 		const value_type & operator*() const;
-		//Возвращает указатель на текущий элемент коллекции.
+		//Р’РѕР·РІСЂР°С‰Р°РµС‚ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° С‚РµРєСѓС‰РёР№ СЌР»РµРјРµРЅС‚ РєРѕР»Р»РµРєС†РёРё.
 		const value_type * operator->() const;
 
 		const_iterator & operator++();
@@ -50,78 +50,78 @@ public:
 		const_iterator & operator--();
 		const_iterator operator--(int);
 	};
-	/* Конструкторы */
+	/* РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹ */
 	LinkedList();
 	LinkedList(const LinkedList & other);
 	LinkedList(LinkedList && other);
 
-	/* Деструктор */
+	/* Р”РµСЃС‚СЂСѓРєС‚РѕСЂ */
 	~LinkedList();
 
-	/* Оператор присваивания */
+	/* РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ */
 	LinkedList & operator=(const LinkedList & other);
 	LinkedList & operator=(LinkedList && other);
 
-	/* Доступ к итераторам */
-	//Возвращает итератор, указывающий на первый элемент списка.
+	/* Р”РѕСЃС‚СѓРї Рє РёС‚РµСЂР°С‚РѕСЂР°Рј */
+	//Р’РѕР·РІСЂР°С‰Р°РµС‚ РёС‚РµСЂР°С‚РѕСЂ, СѓРєР°Р·С‹РІР°СЋС‰РёР№ РЅР° РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ СЃРїРёСЃРєР°.
 	iterator begin();
 	const_iterator begin() const;
 	const_iterator cbegin() const;
-	//Возвращает итератор, указывающий на элемент списка, следующий за последним
-	//т.е. отсутствующий в списке.
+	//Р’РѕР·РІСЂР°С‰Р°РµС‚ РёС‚РµСЂР°С‚РѕСЂ, СѓРєР°Р·С‹РІР°СЋС‰РёР№ РЅР° СЌР»РµРјРµРЅС‚ СЃРїРёСЃРєР°, СЃР»РµРґСѓСЋС‰РёР№ Р·Р° РїРѕСЃР»РµРґРЅРёРј
+	//С‚.Рµ. РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‰РёР№ РІ СЃРїРёСЃРєРµ.
 	iterator end();
 	const_iterator end() const;
 	const_iterator cend() const;
 
-	/* Размерность */
-	//Возвращает размер списка.
+	/* Р Р°Р·РјРµСЂРЅРѕСЃС‚СЊ */
+	//Р’РѕР·РІСЂР°С‰Р°РµС‚ СЂР°Р·РјРµСЂ СЃРїРёСЃРєР°.
 	int size() const;
-	//Возвращает истину, если список пуст.
+	//Р’РѕР·РІСЂР°С‰Р°РµС‚ РёСЃС‚РёРЅСѓ, РµСЃР»Рё СЃРїРёСЃРѕРє РїСѓСЃС‚.
 	bool empty() const;
 
-	/* Доступ к элементам */
-	//Возвращает ссылку на первый элемент списка.
+	/* Р”РѕСЃС‚СѓРї Рє СЌР»РµРјРµРЅС‚Р°Рј */
+	//Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃСЃС‹Р»РєСѓ РЅР° РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ СЃРїРёСЃРєР°.
 	value_type & front();
 	const value_type & front() const;
-	//Возвращает ссылку на последний элемент списка.
+	//Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃСЃС‹Р»РєСѓ РЅР° РїРѕСЃР»РµРґРЅРёР№ СЌР»РµРјРµРЅС‚ СЃРїРёСЃРєР°.
 	value_type & back();
 	const value_type & back() const;
 
-	/* Модификаторы */
-	//Удаляет элемент, на который указывает итератор pos.
+	/* РњРѕРґРёС„РёРєР°С‚РѕСЂС‹ */
+	//РЈРґР°Р»СЏРµС‚ СЌР»РµРјРµРЅС‚, РЅР° РєРѕС‚РѕСЂС‹Р№ СѓРєР°Р·С‹РІР°РµС‚ РёС‚РµСЂР°С‚РѕСЂ pos.
 	iterator erase(iterator pos);
-	//Удаляет элементы в интервале [begin, end).
+	//РЈРґР°Р»СЏРµС‚ СЌР»РµРјРµРЅС‚С‹ РІ РёРЅС‚РµСЂРІР°Р»Рµ [begin, end).
 	iterator erase(iterator begin, iterator end);
-	//Удаляет все вхождения value в список.
+	//РЈРґР°Р»СЏРµС‚ РІСЃРµ РІС…РѕР¶РґРµРЅРёСЏ value РІ СЃРїРёСЃРѕРє.
 	int remove(const value_type & value);
-	//Очищает список.
+	//РћС‡РёС‰Р°РµС‚ СЃРїРёСЃРѕРє.
 	void clear();
 
-	//Удаляет последний элемент списка.
+	//РЈРґР°Р»СЏРµС‚ РїРѕСЃР»РµРґРЅРёР№ СЌР»РµРјРµРЅС‚ СЃРїРёСЃРєР°.
 	void pop_back();
-	//Удаляет первый элемент списка.
+	//РЈРґР°Р»СЏРµС‚ РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ СЃРїРёСЃРєР°.
 	void pop_front();
-	//Добавляет значение value в конец списка.
+	//Р”РѕР±Р°РІР»СЏРµС‚ Р·РЅР°С‡РµРЅРёРµ value РІ РєРѕРЅРµС† СЃРїРёСЃРєР°.
 	void push_back(const value_type & value);
-	//Добавляет значение value в начало списка.
+	//Р”РѕР±Р°РІР»СЏРµС‚ Р·РЅР°С‡РµРЅРёРµ value РІ РЅР°С‡Р°Р»Рѕ СЃРїРёСЃРєР°.
 	void push_front(const value_type & value);
-	//Вставляет значение value перед элементом, на который указывает before
+	//Р’СЃС‚Р°РІР»СЏРµС‚ Р·РЅР°С‡РµРЅРёРµ value РїРµСЂРµРґ СЌР»РµРјРµРЅС‚РѕРј, РЅР° РєРѕС‚РѕСЂС‹Р№ СѓРєР°Р·С‹РІР°РµС‚ before
 	iterator insert(iterator before, const value_type & value);
 
-	/* Операторы внутренние */
-	//Присоединяет other к списку.
+	/* РћРїРµСЂР°С‚РѕСЂС‹ РІРЅСѓС‚СЂРµРЅРЅРёРµ */
+	//РџСЂРёСЃРѕРµРґРёРЅСЏРµС‚ other Рє СЃРїРёСЃРєСѓ.
 	LinkedList & operator+=(const LinkedList & other);
 
-	/* Операторы внешние */
+	/* РћРїРµСЂР°С‚РѕСЂС‹ РІРЅРµС€РЅРёРµ */
 	friend bool operator!=(const LinkedList & left, const LinkedList & right);
 	friend bool operator==(const LinkedList & left, const LinkedList & right);
 
 };
 
-/* Операторы внешние */
-//Сравнивает 2 листа
+/* РћРїРµСЂР°С‚РѕСЂС‹ РІРЅРµС€РЅРёРµ */
+//РЎСЂР°РІРЅРёРІР°РµС‚ 2 Р»РёСЃС‚Р°
 bool operator!=(const LinkedList & left, const LinkedList & right);
 bool operator==(const LinkedList & left, const LinkedList & right);
 
-//Возвращает лист объединяющий 2 листа.
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ Р»РёСЃС‚ РѕР±СЉРµРґРёРЅСЏСЋС‰РёР№ 2 Р»РёСЃС‚Р°.
 LinkedList operator+(const LinkedList & left, const LinkedList & right);

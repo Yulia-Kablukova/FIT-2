@@ -1,6 +1,6 @@
-#include "linked_list.h"
+п»ї#include "linked_list.h"
 
-/* Конструкторы */
+/* РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹ */
 LinkedList::LinkedList()
 {
 	tail = new node;
@@ -23,13 +23,13 @@ LinkedList::LinkedList(LinkedList && other)
 	other.tail = nullptr;
 }
 
-/* Деструктор */
+/* Р”РµСЃС‚СЂСѓРєС‚РѕСЂ */
 LinkedList::~LinkedList()
 {
 	delete[] this;
 }
 
-/* Оператор присваивания */
+/* РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ */
 LinkedList & LinkedList::operator=(const LinkedList & other)
 {
 	clear();
@@ -53,8 +53,8 @@ LinkedList & LinkedList::operator=(LinkedList && other)
 	return *this;
 }
 
-/* Доступ к итераторам */
-//Возвращает итератор, указывающий на первый элемент списка.
+/* Р”РѕСЃС‚СѓРї Рє РёС‚РµСЂР°С‚РѕСЂР°Рј */
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РёС‚РµСЂР°С‚РѕСЂ, СѓРєР°Р·С‹РІР°СЋС‰РёР№ РЅР° РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ СЃРїРёСЃРєР°.
 LinkedList::iterator LinkedList::begin()
 {
 	return tail->next;
@@ -67,8 +67,8 @@ LinkedList::const_iterator LinkedList::cbegin() const
 {
 	return tail->next;
 }
-//Возвращает итератор, указывающий на элемент списка, следующий за последним
-//т.е. отсутствующий в списке.
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ РёС‚РµСЂР°С‚РѕСЂ, СѓРєР°Р·С‹РІР°СЋС‰РёР№ РЅР° СЌР»РµРјРµРЅС‚ СЃРїРёСЃРєР°, СЃР»РµРґСѓСЋС‰РёР№ Р·Р° РїРѕСЃР»РµРґРЅРёРј
+//С‚.Рµ. РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‰РёР№ РІ СЃРїРёСЃРєРµ.
 LinkedList::iterator LinkedList::end()
 {
 	return tail;
@@ -114,8 +114,8 @@ const value_type & LinkedList::back() const
 	return tail->data;
 }
 
-/* Модификаторы */
-//Удаляет элемент, на который указывает итератор pos.
+/* РњРѕРґРёС„РёРєР°С‚РѕСЂС‹ */
+//РЈРґР°Р»СЏРµС‚ СЌР»РµРјРµРЅС‚, РЅР° РєРѕС‚РѕСЂС‹Р№ СѓРєР°Р·С‹РІР°РµС‚ РёС‚РµСЂР°С‚РѕСЂ pos.
 LinkedList::iterator LinkedList::erase(iterator pos)
 {
 	pos.cur->prev->next = pos.cur->next;
@@ -126,7 +126,7 @@ LinkedList::iterator LinkedList::erase(iterator pos)
 
 	return tail->next;
 }
-//Удаляет элементы в интервале [begin, end).
+//РЈРґР°Р»СЏРµС‚ СЌР»РµРјРµРЅС‚С‹ РІ РёРЅС‚РµСЂРІР°Р»Рµ [begin, end).
 LinkedList::iterator LinkedList::erase(iterator begin, iterator end)
 {
 	begin.cur->prev->next = end.cur;
@@ -141,7 +141,7 @@ LinkedList::iterator LinkedList::erase(iterator begin, iterator end)
 	return tail->next;
 }
 
-//Удаляет все вхождения value в список.
+//РЈРґР°Р»СЏРµС‚ РІСЃРµ РІС…РѕР¶РґРµРЅРёСЏ value РІ СЃРїРёСЃРѕРє.
 int LinkedList::remove(const value_type & value)
 {
 	int count = 0;
@@ -159,7 +159,7 @@ int LinkedList::remove(const value_type & value)
 	return count;
 }
 
-//Очищает список.
+//РћС‡РёС‰Р°РµС‚ СЃРїРёСЃРѕРє.
 void LinkedList::clear()
 {
 	for (iterator i = tail->next; i != tail; i++)
@@ -170,7 +170,7 @@ void LinkedList::clear()
 	tail->next = tail->prev = tail;
 }
 
-//Удаляет последний элемент списка.
+//РЈРґР°Р»СЏРµС‚ РїРѕСЃР»РµРґРЅРёР№ СЌР»РµРјРµРЅС‚ СЃРїРёСЃРєР°.
 void LinkedList::pop_back()
 {
 	if (tail->next == tail)
@@ -184,7 +184,7 @@ void LinkedList::pop_back()
 	delete tmp;
 	listSize--;
 }
-//Удаляет первый элемент списка.
+//РЈРґР°Р»СЏРµС‚ РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ СЃРїРёСЃРєР°.
 void LinkedList::pop_front()
 {
 	if (tail->next == tail)
@@ -199,19 +199,19 @@ void LinkedList::pop_front()
 	listSize--;
 }
 
-//Добавляет значение value в конец списка.
+//Р”РѕР±Р°РІР»СЏРµС‚ Р·РЅР°С‡РµРЅРёРµ value РІ РєРѕРЅРµС† СЃРїРёСЃРєР°.
 void LinkedList::push_back(const value_type & value)
 {
 	insert(tail, value);
 }
 
-//Добавляет значение value в начало списка.
+//Р”РѕР±Р°РІР»СЏРµС‚ Р·РЅР°С‡РµРЅРёРµ value РІ РЅР°С‡Р°Р»Рѕ СЃРїРёСЃРєР°.
 void LinkedList::push_front(const value_type & value)
 {
 	insert(tail->next, value);
 }
 
-//Вставляет значение value перед элементом, на который указывает before
+//Р’СЃС‚Р°РІР»СЏРµС‚ Р·РЅР°С‡РµРЅРёРµ value РїРµСЂРµРґ СЌР»РµРјРµРЅС‚РѕРј, РЅР° РєРѕС‚РѕСЂС‹Р№ СѓРєР°Р·С‹РІР°РµС‚ before
 LinkedList::iterator LinkedList::insert(iterator before, const value_type & value)
 {
 	node* tmp = new node;
@@ -224,8 +224,8 @@ LinkedList::iterator LinkedList::insert(iterator before, const value_type & valu
 	return tmp;
 }
 
-/* Операторы внутренние */
-//Присоединяет other к списку.
+/* РћРїРµСЂР°С‚РѕСЂС‹ РІРЅСѓС‚СЂРµРЅРЅРёРµ */
+//РџСЂРёСЃРѕРµРґРёРЅСЏРµС‚ other Рє СЃРїРёСЃРєСѓ.
 LinkedList & LinkedList::operator+=(const LinkedList & other)
 {
 	for (const_iterator i = other.cbegin(); i != other.cend(); i++)
@@ -235,8 +235,8 @@ LinkedList & LinkedList::operator+=(const LinkedList & other)
 	return *this;
 }
 
-/* Операторы внешние */
-//Сравнивает 2 листа
+/* РћРїРµСЂР°С‚РѕСЂС‹ РІРЅРµС€РЅРёРµ */
+//РЎСЂР°РІРЅРёРІР°РµС‚ 2 Р»РёСЃС‚Р°
 bool operator!=(const LinkedList & left, const LinkedList & right)
 {
 	if (left.listSize != right.listSize)
@@ -256,7 +256,7 @@ bool operator==(const LinkedList & left, const LinkedList & right)
 	return !operator!=(left, right);
 }
 
-//Возвращает лист объединяющий 2 листа.
+//Р’РѕР·РІСЂР°С‰Р°РµС‚ Р»РёСЃС‚ РѕР±СЉРµРґРёРЅСЏСЋС‰РёР№ 2 Р»РёСЃС‚Р°.
 LinkedList operator+(const LinkedList & left, const LinkedList & right)
 {
 	LinkedList *list = new LinkedList;
