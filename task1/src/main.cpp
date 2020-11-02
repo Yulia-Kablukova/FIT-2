@@ -2,9 +2,9 @@
 #include <gtest/gtest.h>
 #include "linked_list.h"
 
-//insert, erase, clear, size, доступ по итератору
-//Конструкторы и операторы =
-//И оператор +=
+//insert, erase, clear, size, Г¤Г®Г±ГІГіГЇ ГЇГ® ГЁГІГҐГ°Г ГІГ®Г°Гі
+//ГЉГ®Г­Г±ГІГ°ГіГЄГІГ®Г°Г» ГЁ Г®ГЇГҐГ°Г ГІГ®Г°Г» =
+//Г€ Г®ГЇГҐГ°Г ГІГ®Г° +=
 
 /*
 class TestLinkedList : public ::testing::Test
