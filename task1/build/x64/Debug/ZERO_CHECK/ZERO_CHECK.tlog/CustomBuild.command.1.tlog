@@ -1,0 +1,10 @@
+^C:\USERS\V_KAB\FIT-2\TASK1\BUILD\CMAKEFILES\6E01B80181BD481D40CC92C89C70E4F1\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/v_kab/FIT-2/task1 -BC:/Users/v_kab/FIT-2/task1/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/v_kab/FIT-2/task1/build/Task1.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
