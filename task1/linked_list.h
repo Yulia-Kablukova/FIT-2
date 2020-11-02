@@ -16,7 +16,7 @@ public:
 	class iterator {
 	public:
 		node* cur;
-		iterator(node* n) : cur(n) {}
+		iterator(node* n);
 
 		iterator & operator=(const iterator & other);
 		bool operator!=(const iterator & other) const;
@@ -34,8 +34,7 @@ public:
 	class const_iterator {
 	public:
 		node* cur;
-
-		const_iterator(node* n) : cur(n) {};
+		const_iterator(node* n);
 
 		const_iterator & operator=(const const_iterator & other);
 		bool operator!=(const const_iterator & other) const;

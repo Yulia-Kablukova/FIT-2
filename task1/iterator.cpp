@@ -1,5 +1,7 @@
 ﻿#include "linked_list.h"
 
+LinkedList::iterator::iterator(node* n) : cur(n) {}
+
 LinkedList::iterator & LinkedList::iterator::operator=(const iterator & other)
 {
 	cur = other.cur;

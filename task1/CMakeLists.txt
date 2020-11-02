@@ -17,8 +17,13 @@ add_executable(
 )
 
 add_executable(
-	test
+	test_list
 	test_list.cpp
+)
+
+target_include_directories(
+	demo PRIVATE
+	"${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
 target_include_directories(
