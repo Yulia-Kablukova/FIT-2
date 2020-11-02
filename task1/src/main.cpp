@@ -38,8 +38,8 @@ TEST_F(TestLinkedList, InsertTest) {
 
 int main()
 {
-	::testing::InitGoogleTest();
-	return RUN_ALL_TESTS();
+	//::testing::InitGoogleTest();
+	//return RUN_ALL_TESTS();
 
 	system("pause");
 }
