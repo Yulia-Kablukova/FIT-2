@@ -9,26 +9,28 @@ add_subdirectory(
 
 add_executable(
 	demo
-	main.cpp
-	linked_list.cpp
-	iterator.cpp
-	const_iterator.cpp
-	linked_list.h
+	src/main.cpp
+	src/linked_list.cpp
+	src/iterator.cpp
+	src/const_iterator.cpp
+	src/linked_list.h
 )
 
 add_executable(
 	test_list
-	test_list.cpp
+	test/test_list.cpp
 )
 
 target_include_directories(
 	demo PRIVATE
-	"${CMAKE_CURRENT_SOURCE_DIR}"
+	"${CMAKE_CURRENT_SOURCE_DIR}/googletest/googletest/include"
 )
 
 target_include_directories(
 	test_list PRIVATE
-	"${CMAKE_CURRENT_SOURCE_DIR}"
+	"${CMAKE_CURRENT_SOURCE_DIR}/googletest"
+	"${CMAKE_CURRENT_SOURCE_DIR}/googletest/googletest/include"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src"
 )
 
 if (MSVC)
