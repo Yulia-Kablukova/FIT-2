@@ -32,26 +32,26 @@ const value_type * LinkedList::const_iterator::operator->() const
 
 LinkedList::const_iterator & LinkedList::const_iterator::operator++()
 {
-	cur++;
+	cur = cur->next;
 	return *this;
 }
 
 LinkedList::const_iterator LinkedList::const_iterator::operator++(int)
 {
 	node* n = cur;
-	cur++;
+	cur = cur->next;
 	return n;
 }
 
 LinkedList::const_iterator & LinkedList::const_iterator::operator--()
 {
-	cur--;
+	cur = cur->prev;
 	return *this;
 }
 
 LinkedList::const_iterator LinkedList::const_iterator::operator--(int)
 {
 	node* n = cur;
-	cur--;
+	cur = cur->prev;
 	return n;
 }

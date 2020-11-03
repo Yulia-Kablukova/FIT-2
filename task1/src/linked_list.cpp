@@ -1,4 +1,4 @@
-﻿#include "linked_list.h"
+﻿#include "linked_list.h"	
 
 /* Конструкторы */
 LinkedList::LinkedList()
@@ -12,12 +12,16 @@ LinkedList::LinkedList(const LinkedList & other)
 {
 	listSize = other.listSize;
 	tail = other.tail;
+	for (node* cur = other.tail->next; cur != other.tail; cur = cur->next)
+	{
+		this->push_back(cur->data);
+	}
 }
 
 LinkedList::LinkedList(LinkedList && other)
 {
 	listSize = other.listSize;
-	this->tail = other.tail;
+	tail = other.tail;
 
 	other.listSize = 0;
 	other.tail = nullptr;
@@ -32,11 +36,11 @@ LinkedList::~LinkedList()
 /* Оператор присваивания */
 LinkedList & LinkedList::operator=(const LinkedList & other)
 {
-	clear();
+	this->clear();
 
 	for (node* cur = other.tail->next; cur != other.tail; cur = cur->next)
 	{
-		push_back(cur->data);
+		this->push_back(cur->data);
 	}
 
 	return *this;
@@ -44,12 +48,13 @@ LinkedList & LinkedList::operator=(const LinkedList & other)
 
 LinkedList & LinkedList::operator=(LinkedList && other)
 {
-	clear();
+	this->clear();
 
-	for (node* cur = other.tail->next; cur != other.tail; cur = cur->next)
-	{
-		//push_back(cur->data);
-	}
+	listSize = other.listSize;
+	tail = other.tail;
+
+	other.listSize = 0;
+	other.tail = nullptr;
 
 	return *this;
 }
@@ -124,6 +129,9 @@ const value_type & LinkedList::back() const
 //Удаляет элемент, на который указывает итератор pos.
 LinkedList::iterator LinkedList::erase(iterator pos)
 {
+	if (pos.cur == tail)
+		return tail;
+
 	pos.cur->prev->next = pos.cur->next;
 	pos.cur->next->prev = pos.cur->prev;
 
@@ -169,12 +177,11 @@ int LinkedList::remove(const value_type & value)
 //Очищает список.
 void LinkedList::clear()
 {
-	for (iterator i = tail->next; i != tail; i++)
+	for (node* i = tail->next; i != tail;)
 	{
-		delete &i;
+		i = i->next;
+		erase(i->prev);
 	}
-	listSize = 0;
-	tail->next = tail->prev = tail;
 }
 
 //Удаляет последний элемент списка.
