@@ -117,12 +117,12 @@ const value_type & LinkedList::front() const
 
 value_type & LinkedList::back()
 {
-	return tail->data;
+	return tail->prev->data;
 }
 
 const value_type & LinkedList::back() const
 {
-	return tail->data;
+	return tail->prev->data;
 }
 
 /* Модификаторы */
