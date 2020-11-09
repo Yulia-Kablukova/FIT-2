@@ -1,106 +1,109 @@
 #include <gtest/gtest.h>
 #include "linked_list.h"
 
-
 TEST(TestLinkedList, PushBackTest) {
-	LinkedList* list = new LinkedList;
+	LinkedList list;
 
-	list->push_back(5);
-	list->push_back(10);
+	list.push_back(5);
+	list.push_back(10);
 
-	EXPECT_EQ(list->listSize, 2);
-	EXPECT_EQ(list->tail->prev->data, 10);
+	EXPECT_EQ(list.size(), 2);
+	EXPECT_EQ(list.front(), 5);
+	EXPECT_EQ(list.back(), 10);
 }
 
 TEST(TestLinkedList, PushFrontTest) {
-	LinkedList* list = new LinkedList;
+	LinkedList list;
 
-	list->push_front(5);
-	list->push_front(10);
+	list.push_front(5);
+	list.push_front(10);
 
-	EXPECT_EQ(list->listSize, 2);
-	EXPECT_EQ(list->tail->next->data, 10);
+	EXPECT_EQ(list.size(), 2);
+	EXPECT_EQ(list.front(), 10);
+	EXPECT_EQ(list.back(), 5);
 }
 
 TEST(TestLinkedList, BeginTest) {
-	LinkedList* list = new LinkedList;
+	LinkedList list;
 
-	list->push_back(5);
-	list->push_back(10);
+	list.push_back(5);
+	list.push_back(10);
 
-	EXPECT_EQ(list->begin().cur->data, 5);
+	EXPECT_EQ(*(list.begin()), 5);
 }
 
 TEST(TestLinkedList, EndTest) {
-	LinkedList* list = new LinkedList;
+	LinkedList list;
+	LinkedList::iterator it = list.end();
 
-	list->push_back(5);
-	list->push_back(10);
+	list.push_back(5);
+	list.push_back(10);
 
-	EXPECT_EQ(list->end().cur, list->tail);
+	EXPECT_EQ(list.end(), it);
 }
 
 TEST(TestLinkedList, InsertTest) {
-	LinkedList* list = new LinkedList;
+	LinkedList list;
 
-	list->insert(list->end(), 5);
+	list.insert(list.end(), 5);
 
-	EXPECT_EQ(list->listSize, 1);
-	EXPECT_EQ(list->tail->prev->data, 5);
+	EXPECT_EQ(list.size(), 1);
+	EXPECT_EQ(list.back(), 5);
 }
 
 TEST(TestLinkedList, SizeTest) {
-	LinkedList* list = new LinkedList;
+	LinkedList list;
 
-	EXPECT_EQ(0, list->size());
+	EXPECT_EQ(0, list.size());
 
-	list->push_back(5);
-	list->push_back(10);
+	list.push_back(5);
+	list.push_back(10);
 
-	EXPECT_EQ(list->listSize, list->size());
-	EXPECT_EQ(2, list->size());
+	EXPECT_EQ(2, list.size());
 }
 
 TEST(TestLinkedList, EraseTest) {
-	LinkedList* list = new LinkedList;
-	list->push_front(5);
+	LinkedList list;
+	list.push_back(5);
+	list.push_back(10);
 
-	list->erase(list->begin());
+	list.erase(list.begin());
 
-	EXPECT_EQ(list->listSize, 0);
+	EXPECT_EQ(list.size(), 1);
+	EXPECT_EQ(list.front(), 10);
 }
 
 TEST(TestLinkedList, ClearReturnsEmptyList) {
-	LinkedList* list = new LinkedList;
-	list->push_back(5);
-	list->push_back(10);
+	LinkedList list;
+	list.push_back(5);
+	list.push_back(10);
 
-	list->clear();
-	
-	EXPECT_EQ(list->listSize, 0);
+	list.clear();
+
+	EXPECT_EQ(list.size(), 0);
 }
 
-TEST(TestLinkedList, OperatorEqually) {
-	LinkedList* list1 = new LinkedList;
-	list1->push_back(5);
-	list1->push_back(10);
-	LinkedList* list2 = new LinkedList;
-	list2->push_back(5);
-	
-	list2->operator=(*list1);
+TEST(TestLinkedList, OperatorEquallyTest) {
+	LinkedList list1;
+	list1.push_back(5);
+	list1.push_back(10);
+	LinkedList list2;
+	list2.push_back(5);
 
-	EXPECT_EQ(list1->listSize, list2->listSize);
-	EXPECT_EQ(list1->front(), list2->front());
+	list2 = list1;
+
+	EXPECT_EQ(list1.size(), list2.size());
+	EXPECT_EQ(list1.front(), list2.front());
+	EXPECT_EQ(list1.back(), list2.back());
 }
 
-TEST(TestLinkedList, OperatorEquallyPlus) {
-	LinkedList* list1 = new LinkedList;
-	list1->push_back(5);
-	LinkedList* list2 = new LinkedList;
-	list1->push_back(10);
-	int size = list1->listSize;
+TEST(TestLinkedList, OperatorEquallyPlusTest) {
+	LinkedList list1;
+	list1.push_back(5);
+	LinkedList list2;
+	list2.push_back(10);
 
-	list1->operator+=(*list2);
+	list1 += list2;
 
-	EXPECT_EQ(list1->listSize, size + list2->listSize);
+	EXPECT_EQ(list1.size(), 1 + list2.size());
 }

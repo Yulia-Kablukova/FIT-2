@@ -2,64 +2,67 @@
 
 typedef int value_type;
 class LinkedList {
-public:
 	struct node
 	{
 		value_type data;
 		node* next;
 		node* prev;
 	};
-
 	node* tail;
 	int listSize;
 
+public:
 	class iterator {
-	public:
+		friend class LinkedList;
+
 		node* cur;
 		iterator(node* n);
 
-		iterator & operator=(const iterator & other);
-		bool operator!=(const iterator & other) const;
-		bool operator==(const iterator & other) const;
+	public:
+		iterator& operator=(const iterator& other);
+		bool operator!=(const iterator& other) const;
+		bool operator==(const iterator& other) const;
 		//Возвращает ссылку на текущий элемент коллекции.
-		value_type & operator*();
+		value_type& operator*();
 		//Возвращает указатель на текущий элемент коллекции.
-		value_type * operator->();
+		value_type* operator->();
 
-		iterator & operator++();
+		iterator& operator++();
 		iterator operator++(int);
-		iterator & operator--();
+		iterator& operator--();
 		iterator operator--(int);
 	};
 	class const_iterator {
-	public:
+		friend class LinkedList;
+
 		node* cur;
 		const_iterator(node* n);
 
-		const_iterator & operator=(const const_iterator & other);
-		bool operator!=(const const_iterator & other) const;
-		bool operator==(const const_iterator & other) const;
+	public:
+		const_iterator& operator=(const const_iterator& other);
+		bool operator!=(const const_iterator& other) const;
+		bool operator==(const const_iterator& other) const;
 		//Возвращает ссылку на текущий элемент коллекции.
-		const value_type & operator*() const;
+		const value_type& operator*() const;
 		//Возвращает указатель на текущий элемент коллекции.
-		const value_type * operator->() const;
+		const value_type* operator->() const;
 
-		const_iterator & operator++();
+		const_iterator& operator++();
 		const_iterator operator++(int);
-		const_iterator & operator--();
+		const_iterator& operator--();
 		const_iterator operator--(int);
 	};
 	/* Конструкторы */
 	LinkedList();
-	LinkedList(const LinkedList & other);
-	LinkedList(LinkedList && other);
+	LinkedList(const LinkedList& other);
+	LinkedList(LinkedList&& other);
 
 	/* Деструктор */
 	~LinkedList();
 
 	/* Оператор присваивания */
-	LinkedList & operator=(const LinkedList & other);
-	LinkedList & operator=(LinkedList && other);
+	LinkedList& operator=(const LinkedList& other);
+	LinkedList& operator=(LinkedList&& other);
 
 	/* Доступ к итераторам */
 	//Возвращает итератор, указывающий на первый элемент списка.
@@ -80,11 +83,11 @@ public:
 
 	/* Доступ к элементам */
 	//Возвращает ссылку на первый элемент списка.
-	value_type & front();
-	const value_type & front() const;
+	value_type& front();
+	const value_type& front() const;
 	//Возвращает ссылку на последний элемент списка.
-	value_type & back();
-	const value_type & back() const;
+	value_type& back();
+	const value_type& back() const;
 
 	/* Модификаторы */
 	//Удаляет элемент, на который указывает итератор pos.
@@ -92,7 +95,7 @@ public:
 	//Удаляет элементы в интервале [begin, end).
 	iterator erase(iterator begin, iterator end);
 	//Удаляет все вхождения value в список.
-	int remove(const value_type & value);
+	int remove(const value_type& value);
 	//Очищает список.
 	void clear();
 
@@ -101,26 +104,26 @@ public:
 	//Удаляет первый элемент списка.
 	void pop_front();
 	//Добавляет значение value в конец списка.
-	void push_back(const value_type & value);
+	void push_back(const value_type& value);
 	//Добавляет значение value в начало списка.
-	void push_front(const value_type & value);
+	void push_front(const value_type& value);
 	//Вставляет значение value перед элементом, на который указывает before
-	iterator insert(iterator before, const value_type & value);
+	iterator insert(iterator before, const value_type& value);
 
 	/* Операторы внутренние */
 	//Присоединяет other к списку.
-	LinkedList & operator+=(const LinkedList & other);
+	LinkedList& operator+=(const LinkedList& other);
 
 	/* Операторы внешние */
-	friend bool operator!=(const LinkedList & left, const LinkedList & right);
-	friend bool operator==(const LinkedList & left, const LinkedList & right);
+	friend bool operator!=(const LinkedList& left, const LinkedList& right);
+	friend bool operator==(const LinkedList& left, const LinkedList& right);
 
 };
 
 /* Операторы внешние */
 //Сравнивает 2 листа
-bool operator!=(const LinkedList & left, const LinkedList & right);
-bool operator==(const LinkedList & left, const LinkedList & right);
+bool operator!=(const LinkedList& left, const LinkedList& right);
+bool operator==(const LinkedList& left, const LinkedList& right);
 
 //Возвращает лист объединяющий 2 листа.
-LinkedList operator+(const LinkedList & left, const LinkedList & right);
+LinkedList operator+(const LinkedList& left, const LinkedList& right);

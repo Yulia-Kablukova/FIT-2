@@ -4,22 +4,29 @@
 LinkedList::LinkedList()
 {
 	tail = new node;
+	tail->data = value_type();
 	tail->next = tail->prev = tail;
 	listSize = 0;
 }
 
-LinkedList::LinkedList(const LinkedList & other)
+LinkedList::LinkedList(const LinkedList& other)
 {
-	listSize = other.listSize;
-	tail = other.tail;
-	for (node* cur = other.tail->next; cur != other.tail; cur = cur->next)
+	tail = new node;
+	tail->data = value_type();
+	tail->next = tail->prev = tail;
+	listSize = 0;
+
+	for (const_iterator cur = other.cbegin(); cur != other.cend(); ++cur)
 	{
-		this->push_back(cur->data);
+		this->push_back(*cur);
 	}
 }
 
-LinkedList::LinkedList(LinkedList && other)
+LinkedList::LinkedList(LinkedList&& other)
 {
+	if (this == &other)
+		return;
+
 	listSize = other.listSize;
 	tail = other.tail;
 
@@ -30,25 +37,29 @@ LinkedList::LinkedList(LinkedList && other)
 /* Деструктор */
 LinkedList::~LinkedList()
 {
-	delete[] this;
+	clear();
+	delete tail;
 }
 
 /* Оператор присваивания */
-LinkedList & LinkedList::operator=(const LinkedList & other)
+LinkedList& LinkedList::operator=(const LinkedList& other)
 {
-	this->clear();
+	clear();
 
-	for (node* cur = other.tail->next; cur != other.tail; cur = cur->next)
+	for (const_iterator cur = other.cbegin(); cur != other.cend(); ++cur)
 	{
-		this->push_back(cur->data);
+		push_back(*cur);
 	}
 
 	return *this;
 }
 
-LinkedList & LinkedList::operator=(LinkedList && other)
+LinkedList& LinkedList::operator=(LinkedList&& other)
 {
-	this->clear();
+	if (this == &other)
+		return *this;
+
+	clear();
 
 	listSize = other.listSize;
 	tail = other.tail;
@@ -100,27 +111,25 @@ int LinkedList::size() const
 
 bool LinkedList::empty() const
 {
-	if (listSize)
-		return false;
-	return true;
+	return listSize == 0;
 }
 
-value_type & LinkedList::front()
+value_type& LinkedList::front()
 {
 	return tail->next->data;
 }
 
-const value_type & LinkedList::front() const
+const value_type& LinkedList::front() const
 {
 	return tail->next->data;
 }
 
-value_type & LinkedList::back()
+value_type& LinkedList::back()
 {
 	return tail->prev->data;
 }
 
-const value_type & LinkedList::back() const
+const value_type& LinkedList::back() const
 {
 	return tail->prev->data;
 }
@@ -129,47 +138,50 @@ const value_type & LinkedList::back() const
 //Удаляет элемент, на который указывает итератор pos.
 LinkedList::iterator LinkedList::erase(iterator pos)
 {
-	if (pos.cur == tail)
-		return tail;
+	if (pos == end())
+		throw std::invalid_argument("List is empty");
 
-	pos.cur->prev->next = pos.cur->next;
-	pos.cur->next->prev = pos.cur->prev;
+	iterator it = pos.cur->next;
+
+	pos.cur->prev->next = it.cur;
+	it.cur->prev = pos.cur->prev;
 
 	delete pos.cur;
 	listSize--;
 
-	return tail->next;
+	return it;
 }
 
 //Удаляет элементы в интервале [begin, end).
 LinkedList::iterator LinkedList::erase(iterator begin, iterator end)
 {
-	begin.cur->prev->next = end.cur;
-	end.cur->prev = begin.cur->prev;
+	iterator it = begin;
 
-	for (iterator i = begin; i != end; i++)
+	while (it != end)
 	{
-		delete &i;
-		listSize--;
+		it = erase(it);
 	}
 
-	return tail->next;
+	return it;
 }
 
 //Удаляет все вхождения value в список.
-int LinkedList::remove(const value_type & value)
+int LinkedList::remove(const value_type& value)
 {
 	int count = 0;
 
-	for (iterator i = tail->next; i != tail; i++)
+	for (iterator i = begin(); i != end();)
 	{
-		if (i.cur->data == value)
+		if (*i == value)
 		{
-			delete &i;
+			i = erase(i);
 			count++;
 		}
+		else
+		{
+			++i;
+		}
 	}
-	listSize -= count;
 
 	return count;
 }
@@ -177,57 +189,38 @@ int LinkedList::remove(const value_type & value)
 //Очищает список.
 void LinkedList::clear()
 {
-	for (node* i = tail->next; i != tail;)
+	for (iterator i = begin(); i != end();)
 	{
-		i = i->next;
-		erase(i->prev);
+		i = erase(i);
 	}
 }
 
 //Удаляет последний элемент списка.
 void LinkedList::pop_back()
 {
-	if (empty())
-		return;
-
-	node* tmp = tail->prev;
-
-	tail->prev = tail->prev->prev;
-	tail->prev->next = tail;
-
-	delete tmp;
-	listSize--;
+	erase(--end());
 }
 
 //Удаляет первый элемент списка.
 void LinkedList::pop_front()
 {
-	if (empty())
-		return;
-
-	node* tmp = tail->next;
-
-	tail->next = tail->next->next;
-	tail->next->prev = tail;
-
-	delete tmp;
-	listSize--;
+	erase(begin());
 }
 
 //Добавляет значение value в конец списка.
-void LinkedList::push_back(const value_type & value)
+void LinkedList::push_back(const value_type& value)
 {
-	insert(tail, value);
+	insert(end(), value);
 }
 
 //Добавляет значение value в начало списка.
-void LinkedList::push_front(const value_type & value)
+void LinkedList::push_front(const value_type& value)
 {
-	insert(tail->next, value);
+	insert(begin(), value);
 }
 
 //Вставляет значение value перед элементом, на который указывает before
-LinkedList::iterator LinkedList::insert(iterator before, const value_type & value)
+LinkedList::iterator LinkedList::insert(iterator before, const value_type& value)
 {
 	node* tmp = new node;
 	tmp->data = value;
@@ -242,19 +235,22 @@ LinkedList::iterator LinkedList::insert(iterator before, const value_type & valu
 
 /* Операторы внутренние */
 //Присоединяет other к списку.
-LinkedList & LinkedList::operator+=(const LinkedList & other)
+LinkedList& LinkedList::operator+=(const LinkedList& other)
 {
-	for (const_iterator i = other.cbegin(); i != other.cend(); i++)
+	for (auto &item : other)
 	{
-		push_back(i.cur->data);
+		push_back(item);
 	}
 	return *this;
 }
 
 /* Операторы внешние */
 //Сравнивает 2 листа
-bool operator!=(const LinkedList & left, const LinkedList & right)
+bool operator!=(const LinkedList& left, const LinkedList& right)
 {
+	if (&left == &right)
+		return false;
+
 	if (left.listSize != right.listSize)
 		return true;
 
@@ -267,16 +263,14 @@ bool operator!=(const LinkedList & left, const LinkedList & right)
 	return false;
 }
 
-bool operator==(const LinkedList & left, const LinkedList & right)
+bool operator==(const LinkedList& left, const LinkedList& right)
 {
-	return !operator!=(left, right);
+	return !(left != right);
 }
 
 //Возвращает лист объединяющий 2 листа.
-LinkedList operator+(const LinkedList & left, const LinkedList & right)
+LinkedList operator+(const LinkedList& left, const LinkedList& right)
 {
-	LinkedList *list = new LinkedList;
-	list->operator=(left);
-	list->operator+=(right);
-	return *list;
+	LinkedList list(left);
+	return list += right;
 }
