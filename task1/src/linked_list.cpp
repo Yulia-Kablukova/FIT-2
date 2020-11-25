@@ -24,9 +24,6 @@ LinkedList::LinkedList(const LinkedList& other)
 
 LinkedList::LinkedList(LinkedList&& other)
 {
-	if (this == &other)
-		return;
-
 	listSize = other.listSize;
 	tail = other.tail;
 
@@ -60,6 +57,7 @@ LinkedList& LinkedList::operator=(LinkedList&& other)
 		return *this;
 
 	clear();
+	delete tail;
 
 	listSize = other.listSize;
 	tail = other.tail;
