@@ -13,6 +13,12 @@ int main(int argc, char** argv)
 	{
 		std::ifstream fin;
 		fin.open(argv[1]);
+
+		if (!fin)
+		{
+			std::cout << "Can't open the file." << std::endl;
+		}
+
 		calculator.calculate(fin);
 	}
 
