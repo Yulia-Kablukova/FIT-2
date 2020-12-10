@@ -1,6 +1,7 @@
 #include "Calculator.h"
 #include "OperationFactory.h"
 #include "OperationMaker.h"
+#include "Exceptions.h"
 
 void Calculator::calculate(std::istream& stream)
 {
@@ -27,8 +28,14 @@ void Calculator::calculate(std::istream& stream)
 				arg = "";
 			}
 		}
-
-		std::unique_ptr<Operation> operation(OperationFactory::getInstance().getOperation(command));
-		operation->execute(args, ctx);
+		
+		try {
+			std::unique_ptr<Operation> operation(OperationFactory::getInstance().getOperation(command));
+			operation->execute(args, ctx);
+		}
+		catch (CalculatorException &err)
+		{
+			std::cout << err.what() << std::endl;
+		}
 	}
 }
