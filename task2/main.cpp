@@ -17,10 +17,11 @@ int main(int argc, char** argv)
 		if (!fin)
 		{
 			std::cout << "Can't open the file." << std::endl;
+			return EXIT_FAILURE;
 		}
 
 		calculator.calculate(fin);
 	}
 
-	return 0;
+	return EXIT_SUCCESS;
 }
