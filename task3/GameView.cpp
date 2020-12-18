@@ -2,40 +2,40 @@
 
 void GameView::startMessage()
 {
-	std::cout << "Äîáðî ïîæàëîâàòü!\nÂâåäèòå êîëè÷åñòâî èãðîêîâ:" << std::endl;
+	std::cout << "Ð”Ð¾Ð±Ñ€Ð¾ Ð¿Ð¾Ð¶Ð°Ð»Ð¾Ð²Ð°Ñ‚ÑŒ!\nÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¸Ð³Ñ€Ð¾ÐºÐ¾Ð²:" << std::endl;
 }
 
 void GameView::numberOfPlayersMessage()
 {
-	std::cout << "Èãðà ðàñ÷èòàíà íà 1 èëè 2 èãðîêà!" << std::endl;
+	std::cout << "Ð˜Ð³Ñ€Ð° Ñ€Ð°ÑÑ‡Ð¸Ñ‚Ð°Ð½Ð° Ð½Ð° 1 Ð¸Ð»Ð¸ 2 Ð¸Ð³Ñ€Ð¾ÐºÐ°!" << std::endl;
 }
 
 void GameView::getNumber(int player)
 {
-	std::cout << "Èãðîê" << player << ", çàãàäàéòå ÷èñëî: " << std::endl;
+	std::cout << "Ð˜Ð³Ñ€Ð¾Ðº" << player << ", Ð·Ð°Ð³Ð°Ð´Ð°Ð¹Ñ‚Ðµ Ñ‡Ð¸ÑÐ»Ð¾: " << std::endl;
 }
 
 void GameView::badNumberMessage()
 {
-	std::cout << "Ââåäèòå ÷èñëî èç 4 íåïîâòîðÿþùèõñÿ öèôð!" << std::endl;
+	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ‡Ð¸ÑÐ»Ð¾ Ð¸Ð· 4 Ð½ÐµÐ¿Ð¾Ð²Ñ‚Ð¾Ñ€ÑÑŽÑ‰Ð¸Ñ…ÑÑ Ñ†Ð¸Ñ„Ñ€!" << std::endl;
 }
 
 void GameView::randomResultMessage(int player)
 {
-	std::cout << "Èãðîê" << player << " õîäèò ïåðâûì!" << std::endl;
+	std::cout << "Ð˜Ð³Ñ€Ð¾Ðº" << player << " Ñ…Ð¾Ð´Ð¸Ñ‚ Ð¿ÐµÑ€Ð²Ñ‹Ð¼!" << std::endl;
 }
 
 void GameView::requestAnswer(int player)
 {
-	std::cout << "\nÈãðîê" << player << ": " << std::endl;
+	std::cout << "\nÐ˜Ð³Ñ€Ð¾Ðº" << player << ": " << std::endl;
 }
 
 void GameView::resultsMessage(int bulls, int cows)
 {
-	std::cout << "Áûêîâ: " << bulls << ", êîðîâ: " << cows << std::endl;
+	std::cout << "Ð‘Ñ‹ÐºÐ¾Ð²: " << bulls << ", ÐºÐ¾Ñ€Ð¾Ð²: " << cows << std::endl;
 }
 
 void GameView::winMessage(int player)
 {
-	std::cout << "\nÈÃÐÎÊ" << player << " ÏÎÁÅÄÈË!" << std::endl;
+	std::cout << "\nÐ˜Ð“Ð ÐžÐš" << player << " ÐŸÐžÐ‘Ð•Ð”Ð˜Ð›!" << std::endl;
 }
