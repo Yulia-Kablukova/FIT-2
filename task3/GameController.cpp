@@ -1,193 +1,105 @@
 #include "GameController.h"
 
-GameController::GameController(GameModel* _model, GameView* _view)
+GameController::GameController(std::unique_ptr<GameModel> *_model, std::unique_ptr<GameView> *_view)
 {
-	model = _model;
-	view = _view;
-	model->addObserver(this);
-}
-
-GameController::~GameController()
-{
-	delete model;
-	delete view;
-}
-
-void GameController::update()
-{
-
+	model = std::move(_model);
+	view = std::move(_view);
 }
 
 void GameController::start()
 {
-	view->startMessage();
+	view->get()->startMessage();
 
-	int numOfPlayers;
-	std::cin >> numOfPlayers;
+	int numberOfPlayers = requestNumberOfPlayers();
+	system("cls");
+	
+	Player **players = new Player*[2];
 
-	while (numOfPlayers > 2 || numOfPlayers < 0)
+	switch (numberOfPlayers)
 	{
-		view->numberOfPlayersMessage();
-		std::cin >> numOfPlayers;
+	case 2:
+		players[0] = new Human;
+		players[1] = new Human;
+		break;
+	case 1:
+		players[0] = new Human;
+		players[1] = new Bot;
+		break;
+	default:
+		players[0] = new Bot;
+		players[1] = new Bot;
+		break;
 	}
+	
+	requestNumber(players, 1);
+	requestNumber(players, 2);
 
 	system("cls");
-	srand(time(NULL));
-
-	if (numOfPlayers == 2)
+	view->get()->whoStartsMessage(model->get()->getTurn());
+	
+	while (!model->get()->isGameOver())
 	{
-		twoPlayers();
+		requestAnswer(players, model->get()->getTurn());
+		model->get()->changeTurn();
 	}
 
-	if (numOfPlayers == 1)
-	{
-		onePlayer();
-	}
+	delete[] players;
 }
 
-void GameController::twoPlayers()
+int GameController::requestNumberOfPlayers()
 {
-	std::string answer;
-	int player = 1;
+	int num;
 
-	view->getNumber(player);
-	std::cin >> answer;
-	while (!checkAnswer(answer))
+	std::cin >> num;
+
+	while (num > 2 || num < 0)
 	{
-		view->badNumberMessage();
-		std::cin >> answer;
+		view->get()->numberOfPlayersMessage();
+		std::cin >> num;
 	}
-	model->setAnswer(answer, player);
-	system("cls");
 
-	player = 2;
-
-	view->getNumber(player);
-	std::cin >> answer;
-	while (!checkAnswer(answer))
-	{
-		view->badNumberMessage();
-		std::cin >> answer;
-	}
-	model->setAnswer(answer, player);
-	system("cls");
-
-	player = rand() % 2 + 1;
-	view->randomResultMessage(player);
-
-	while (1)
-	{
-		view->requestAnswer(player);
-		std::cin >> answer;
-		while (!checkAnswer(answer))
-		{
-			view->badNumberMessage();
-			std::cin >> answer;
-		}
-		int bulls = model->bullsNumber(answer, player);
-		view->resultsMessage(bulls, model->cowsNumber(answer, player));
-		if (bulls == 4)
-		{
-			view->winMessage(player);
-			break;
-		}
-
-		player = (player % 2) + 1;
-
-		view->requestAnswer(player);
-		std::cin >> answer;
-		while (!checkAnswer(answer))
-		{
-			view->badNumberMessage();
-			std::cin >> answer;
-		}
-		bulls = model->bullsNumber(answer, player);
-		view->resultsMessage(bulls, model->cowsNumber(answer, player));
-		if (bulls == 4)
-		{
-			view->winMessage(player);
-			break;
-		}
-
-		player = (player % 2) + 1;
-	}
+	return num;
 }
 
-void GameController::onePlayer()
+void GameController::requestNumber(Player** players, int player)
 {
-	std::string answer;
-	int player = 1;
+	view->get()->getNumber(player);
 
-	view->getNumber(player);
-	std::cin >> answer;
-	while (!checkAnswer(answer))
+	std::string number = players[player - 1]->createNumber();
+	while (!checkNumber(number))
 	{
-		view->badNumberMessage();
-		std::cin >> answer;
+		view->get()->badNumberMessage();
+		number = players[player - 1]->createNumber();
 	}
-	model->setAnswer(answer, player);
+
+	model->get()->setNumber(number, player);
+
 	system("cls");
-
-	player = 2;
-	Bot* bot = new Bot();
-
-	answer = bot->createNumber();
-	model->setAnswer(answer, player);
-
-	player = rand() % 2 + 1;
-	view->randomResultMessage(player);
-
-	while (1)
-	{
-		if (player == 1)
-		{
-			view->requestAnswer(player);
-			std::cin >> answer;
-			while (!checkAnswer(answer))
-			{
-				view->badNumberMessage();
-				std::cin >> answer;
-			}
-			int bulls = model->bullsNumber(answer, player);
-			view->resultsMessage(bulls, model->cowsNumber(answer, player));
-			if (bulls == 4)
-			{
-				view->winMessage(player);
-				break;
-			}
-
-			player = 2;
-		}
-		else
-		{
-			view->requestAnswer(player);
-			answer = bot->guessAnswer();
-			std::cout << answer << std::endl;
-
-			int bulls = model->bullsNumber(answer, player);
-			view->resultsMessage(bulls, model->cowsNumber(answer, player));
-			if (bulls == 4)
-			{
-				view->winMessage(player);
-				break;
-			}
-
-			player = 1;
-		}
-	}
-
-	delete bot;
 }
 
-bool GameController::checkAnswer(std::string answer)
+void GameController::requestAnswer(Player** players, int player)
 {
-	if (answer.size() != 4) return false;
+	view->get()->requestAnswerMessage(player);
+
+	std::string answer = players[player - 1]->guessAnswer();
+	while (!checkNumber(answer))
+	{
+		view->get()->badNumberMessage();
+		answer = players[player - 1]->guessAnswer();
+	}
+
+	model->get()->setAnswer(answer);
+}
+
+bool GameController::checkNumber(std::string number)
+{
+	if (number.size() != 4) return false;
 
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = i + 1; j < 4; j++)
 		{
-			if (answer[i] == answer[j]) return false;
+			if (number[i] == number[j]) return false;
 		}
 	}
 
