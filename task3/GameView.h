@@ -2,33 +2,18 @@
 #include <iostream>
 #include "GameModel.h"
 
-class GameView
+class GameView : GameObserver
 {
-	GameModel *model;
+	std::unique_ptr<GameModel> *model;
 public:
-	GameView(GameModel *model) : model(model)
-	{
-
-	}
-
-	~GameView()
-	{
-		delete model;
-	}
-
+	GameView(std::unique_ptr<GameModel> *_model);
+	void update();
 	void startMessage();
-
 	void numberOfPlayersMessage();
-
 	void getNumber(int player);
-
 	void badNumberMessage();
-
-	void randomResultMessage(int player);
-
-	void requestAnswer(int player);
-
-	void resultsMessage(int bulls, int cows);
-
-	void winMessage(int player);
+	void whoStartsMessage(int player);
+	void requestAnswerMessage(int player);
+	void resultsMessage();
+	void winMessage();
 };
