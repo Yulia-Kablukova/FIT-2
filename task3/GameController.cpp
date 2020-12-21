@@ -40,7 +40,6 @@ void GameController::start()
 	while (!model->get()->isGameOver())
 	{
 		requestAnswer(players, model->get()->getTurn());
-		model->get()->changeTurn();
 	}
 
 	delete[] players;
