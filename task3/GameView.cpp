@@ -1,5 +1,17 @@
 #include "GameView.h"
 
+GameView::GameView(std::unique_ptr<GameModel> *_model)
+{
+	model = std::move(_model);
+	model->get()->addObserver(this);
+}
+
+void GameView::update()
+{
+	resultsMessage();
+	if (model->get()->isGameOver()) winMessage();
+}
+
 void GameView::startMessage()
 {
 	std::cout << "Добро пожаловать!\nВведите количество игроков:" << std::endl;
@@ -20,22 +32,22 @@ void GameView::badNumberMessage()
 	std::cout << "Введите число из 4 неповторяющихся цифр!" << std::endl;
 }
 
-void GameView::randomResultMessage(int player)
+void GameView::whoStartsMessage(int player)
 {
 	std::cout << "Игрок" << player << " ходит первым!" << std::endl;
 }
 
-void GameView::requestAnswer(int player)
+void GameView::requestAnswerMessage(int player)
 {
 	std::cout << "\nИгрок" << player << ": " << std::endl;
 }
 
-void GameView::resultsMessage(int bulls, int cows)
+void GameView::resultsMessage()
 {
-	std::cout << "Быков: " << bulls << ", коров: " << cows << std::endl;
+	std::cout << "Быков: " << model->get()->getBulls() << ", коров: " << model->get()->getCows() << std::endl;
 }
 
-void GameView::winMessage(int player)
+void GameView::winMessage()
 {
-	std::cout << "\nИГРОК" << player << " ПОБЕДИЛ!" << std::endl;
+	std::cout << "\nИГРОК" << model->get()->getTurn() << " ПОБЕДИЛ!" << std::endl;
 }
