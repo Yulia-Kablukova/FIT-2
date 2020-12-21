@@ -1,16 +1,22 @@
 #pragma once
+#include <tuple>
 #include <string>
 #include "GameObserver.h"
 
 class GameModel : public GameObservable
 {
-	std::string answers[2];
+	std::tuple<std::string, std::string, int, int> players[2];
+	int turn;
+	int gameOver;
 public:
-	GameModel(){}
-
-	void setAnswer(std::string answer, int player);
-
-	int bullsNumber(std::string answer, int player);
-
-	int cowsNumber(std::string answer, int player);
+	GameModel();
+	void setNumber(std::string number, int player);
+	void setAnswer(std::string answer);
+	void changeTurn();
+	int getTurn();
+	int getBulls();
+	int getCows();
+	int bullsNumber(int player);
+	int cowsNumber(int player);
+	bool isGameOver();
 };
