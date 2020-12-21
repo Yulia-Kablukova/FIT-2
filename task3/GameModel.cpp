@@ -22,6 +22,8 @@ void GameModel::setAnswer(std::string answer)
 	if (std::get<2>(players[player - 1]) == 4) gameOver = 1;
 	
 	notifyObservers();
+	
+	changeTurn();
 }
 
 void GameModel::changeTurn()
