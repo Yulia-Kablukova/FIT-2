@@ -1,6 +1,6 @@
 #pragma once
-#include <tuple>
 #include <string>
+#include <tuple>
 #include "GameObserver.h"
 
 class GameModel : public GameObservable
