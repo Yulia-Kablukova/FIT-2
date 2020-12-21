@@ -3,21 +3,17 @@
 #include <cstdlib>
 #include "GameModel.h"
 #include "GameView.h"
-#include "GameObserver.h"
-#include "Bot.h"
+#include "Player.h"
 
-class GameController : GameObserver
+class GameController
 {
-	GameModel* model;
-	GameView* view;
+	std::unique_ptr<GameView> *view;
+	std::unique_ptr<GameModel> *model;
 public:
-	GameController(GameModel* _model, GameView* _view);
-	~GameController();
-
-	void update();
-
+	GameController(std::unique_ptr<GameModel> *_model, std::unique_ptr<GameView> *_view);
 	void start();
-	void twoPlayers();
-	void onePlayer();
-	bool checkAnswer(std::string answer);
+	int requestNumberOfPlayers();
+	void requestNumber(Player** players, int player);
+	void requestAnswer(Player** players, int player);
+	bool checkNumber(std::string number);
 };
