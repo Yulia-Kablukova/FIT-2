@@ -25,32 +25,43 @@ public:
 	}
 };
 
-/*template <class CharT, class Traits, typename... Args>
-void print(std::basic_ostream<CharT, Traits>& os, const std::tuple<Args...>& t)
-{
-  tuplePrinter<CharT, Traits, decltype(t), sizeof...(Args)>::print(os, t);
-}*/
-
 template<class CharT, class Traits, typename... Args>
-auto operator<<(std::basic_ostream<CharT, Traits>& os, std::tuple<Args...> const& t)
+std::basic_ostream<CharT, Traits>& operator<<(std::basic_ostream<CharT, Traits>& os, std::tuple<Args...> const& t)
 {
 	tuplePrinter<CharT, Traits, decltype(t), sizeof...(Args)>::print(os, t);
+	return os;
 }
+
+char CSVParser<int, std::string>::columnSeparator = ';';
+char CSVParser<int, std::string>::stringSeparator = '\n';
 
 int main()
 {
-	std::tuple<int, std::string, double> t(1, "Hello, world!", 5.5);
-	std::cout << t;
-	std::cout << std::endl;
-
-
 	std::ifstream file("test.csv");
-	CSVParser<int, std::string> parser(file, 0);
-	for (std::tuple<int, std::string> rs : parser) {
-		std::cout << rs;
-		std::cout << std::endl;
-	}
-  file.close();
 
-	return 0;
+	if (!file)
+	{
+		std::cout << "Can't open the file." << std::endl;
+		return EXIT_FAILURE;
+	}
+	
+	int count = 0;
+	try
+	{
+		CSVParser<int, std::string> parser(file, 0);
+		count = 1;
+		for (std::tuple<int, std::string> rs : parser)
+		{
+			std::cout << rs << std::endl;
+			count++;
+		}
+	}
+	catch (CSVParserException& err)
+	{
+		if (count) std::cout << "Error in string " << count << ". ";
+		std::cout << err.what() << std::endl;
+	}
+
+	file.close();
+	return EXIT_SUCCESS;
 }
